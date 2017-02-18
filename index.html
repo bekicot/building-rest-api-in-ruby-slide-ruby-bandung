@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Open+Sans+Condensed:300|Roboto+Slab|Lora|Caveat+Brush" rel="stylesheet">
+        <link href="node_modules/reveal.js/css/reveal.css" rel="stylesheet">
+        <link href="node_modules/reveal.js/css/theme/simple.css" rel="stylesheet">
+        <script src="node_modules/headjs/dist/1.0.0/head.js"></script>
+        <script src="node_modules/reveal.js/js/reveal.js"></script>
+        <style>
+            .slide section h2 {
+                font-family: 'Crimson Text'
+            }
+            .slide section  .blockquote { {
+                font-family: 'Roboto Slab'
+            }
+        </style>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-markdown>
+                    ## Membuat Api Dengan Ruby
+                </section>
+                <section data-markdown>
+                    ## Yana Agun Siswanto
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Apa Itu Api ?
+                        > Sebuah interface terhadap resource/aksi yang bisa di diminta dengan parameter tertentu (serta jawabannya dapat di pahami) oleh user yang di berikan izin.
+                    </script>
+                </section>
+                <section>
+                    <h2>Diagram Sederhana Request</h2>
+                    <img src="request-diagram.svg" alt="Request Diagram" />
+                </section>
+                <section>
+                     <h2>Anatomi Request</h2>
+                     <dl>
+                        <div class="fragment fade-in">
+                            <dt>Metode</dt>
+                            <dd>POST, GET, PUT, DELETE, OPTIONS</dd>
+                        </div>
+                        <div class="fragment fade-in">
+                            <dt>URI</dt>
+                            <dd>protokol://host:port/(resource|aksi)</dd>
+                        </div>
+                        <div class="fragment fade-in">
+                            <dt>Header</dt>
+                            <dd>
+                                Accept: application/json<br>
+                                Authorization: Bearer aksestoken1234
+                            </dd>
+                        </div>
+                        <div class="fragment fade-in">
+                            <dt>Body</dt>
+                            <dd>{ "name": "Jason", "age": 21 }</dd>
+                        </div>
+                </section>
+                <section>
+                    <section data-markdown>
+                        ## Pertanyaan Yang Sebaiknya di Tanyakan Sebelum Membuat API
+                    </section>
+                    <section data-markdown>
+                        ### Siapa Penggunanya?
+                        - Front End Developer
+                        - Mobile Developer
+                        - 3rd Party Services (Web Hook) - Background Job
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Metode Authentikasi Yang Ingin Digunakan?
+                            - Cookie
+                            - Token
+                        </script>
+                        <aside class="notes">
+                            Via Authorization header (Bearer)
+                        </aside>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Format Data Yang Diharapkan?
+                            - XML/JSON
+                            - JsonAPI
+                            - JSend https://labs.omniti.com/labs/jsend
+                        </script>
+                    </section>
+                </section>
+                <section data-markdown>
+                    ## Perbandingan Framework API Untuk Rails
+                    > Grape Dan Rails API (Rails 5)
+                </section>
+                <section>
+                    <div style="color: white;background-color: red; top: 5%; position: : absolute;">Draft</div>
+                    - Error Handling
+                        - Parameters
+                    - Representasi Data
+                    - Routing
+                    - Dokumentasi
+                </section>
+            </div>
+        </div>
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'node_modules/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'node_modules/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'node_modules/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'node_modules/reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: 'node_modules/reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+        </script>
+    </body>
+</html>
