@@ -16,16 +16,69 @@
             .slide section  .blockquote { {
                 font-family: 'Roboto Slab'
             }
+            h2 {
+                font-size: 24pt;
+            }
         </style>
     </head>
     <body>
+    <!-- <section>
+        <div style="color: white;background-color: red; top: 5%; position: : absolute;">Draft</div>
+    </section> -->
         <div class="reveal">
             <div class="slides">
                 <section data-markdown>
                     ## Membuat Api Dengan Ruby
                 </section>
+                <section>
+                    <h2>Judul Asli</h2>
+                    <img src="screenshot-topik.png" alt="" width="60%"/>
+                </section>
+                <section>
+                    <section data-markdown>
+                        Membuat API di ruby itu susah!!!
+                    </section>
+                    <section>
+                        <img src="CaveMan.png" alt="">
+                    </section>
+                    <section data-markdown>
+                        What if it's true?
+                        That firebase is easier?
+                    </section>
+                </section>
                 <section data-markdown>
                     ## Yana Agun Siswanto
+                </section>
+                <section>
+                    <ul>
+                        <li>Ruby On Rails Developer</li>
+                        <li class="fragment fade-in">Upwork Freelancer</li>
+                        <li class="fragment fade-in">
+                            <span class="fragment grow">Mahasiswa</span>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Pre Mahasiswa</h3>
+                    <ul>
+                      <li class="fragment fade-in">Codecampz (Hendra Gunawan)</li>
+                      <li class="fragment fade-in">Magloft.com (Seangkatan Reydi Sutandang)</li>
+                    </ul>
+                    <h3 class="fragment fade-in">Saat Menjadi Mahasiswa</h3>
+                    <ul>
+                      <li class="fragment fade-in">Informerly.com (Theedge.ai)</li>
+                      <li class="fragment fade-in">Techdayhq.com</li>
+                      <li class="fragment fade-in">Beberapa Mini Projects di Upwork</li>
+                      <li class="fragment fade-in">Mentor</li>
+                    </ul>
+                </section>
+                <section data-markdown>
+                    ## Make Ruby Great Again
+                        Aaron Patterson @tenderlove
+                    ![](3124.png)
+                </section>
+                <section data-markdown>
+                    ## Membuat Api Dengan Ruby
                 </section>
                 <section data-markdown>
                     <script type="text/template">
@@ -89,18 +142,184 @@
                         </script>
                     </section>
                 </section>
+                <section>
+                    <h3>Checklist Dalam Membuat Api</h3>
+                    <ul>
+                        <li class="fragment fade-in">Error Handling</li>
+                        <li class="fragment fade-in">Parameter Validation</li>
+                        <li class="fragment fade-in">Representasi Data</li>
+                        <li class="fragment fade-in">Routing</li>
+                        <li class="fragment fade-in">Dokumentasi</li>
+                        <li class="fragment fade-in">Versioning</li>
+                    </ul>
+                </section>
                 <section data-markdown>
                     ## Perbandingan Framework API Untuk Rails
                     > Grape Dan Rails API (Rails 5)
                 </section>
-                <section>
-                    <div style="color: white;background-color: red; top: 5%; position: : absolute;">Draft</div>
-                    - Error Handling
-                        - Parameters
-                    - Representasi Data
-                    - Routing
-                    - Dokumentasi
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Performance
+                            time (for ((n=0;n<1000;n++)); do curl -s 192.168.1.18:3000/api/v1/users -o tmp ; done)
+
+                            time (for ((n=0;n<100;n++)); do curl -H "Content-Type: application/json" -X POST -d '{"user[email]":"xyz","user[password]":"xyz"}' http://192.168.1.18:3000/api/v1/users -s -o tmp ; done)
+                    </script>
                 </section>
+                <section data-markdown>
+                    ## System Yang Digunakan
+                        - Virtual Box
+                        - Ubuntu 16.04
+                        - RAM 1GB
+                        - Sqlite
+                        - Mode Production (Puma)
+                </section>
+                <section>
+                    <h2>GET</h2>
+                    <div class="fragment fade-in">
+                        <h3>Rails API</h3>
+                        1.620 Detik Untuk 100 Requests
+                    </div>
+                    <div class="fragment fade-in">
+                        <h3>Grape API</h3>
+                        1.171 Detik Untuk 100 Requests
+                    </div>
+                </section>
+                <section>
+                    <h2>POST</h2>
+                    <div class="fragment fade-in">
+                        <h3>Rails API</h3>
+                        1.821 Detik Untuk 100 Requests
+                    </div>
+                    <div class="fragment fade-in">
+                        <h3>Grape API</h3>
+                        1.494 Detik Untuk 100 Requests
+                    </div>
+                </section>
+                <section data-markdown>
+                    ## Error Handling
+                </section>
+                <section data-markdown>
+                    ## Rails Api
+
+                        ApiController.rb
+
+                        rescue_from 'ActiveRecord::RecordNotFound' do
+                            render json: { status: 'fail', data: ['Data not found!'] }, status: 404
+                        end
+
+                </section>
+                <section data-markdown>
+                    ## Grape Api
+                        rescue_from Grape::Exceptions::ValidationErrors do |e|
+                          error!({ status: 'fail', data: e.full_messages.join(', ')}, 400)
+                        end
+                </section>
+                <section data-markdown>
+                    ## Paramter Validation
+                </section>
+                <section data-markdown>
+                    ## Rails Api
+                        Controller
+
+                        params.fetch(:user).permit(
+                            *User::ATTRIBUTES
+                        )
+
+                        app/models/user.rb
+
+                        class User < ActiveRecord::Base
+                            ATTRIBUTES = [:email, :password, :password_confirmation]
+                        end
+                </section>
+                <section data-markdown>
+                    ## Grape Api
+                        app/grape/api/v1/users.rb
+
+                        params do
+                            requires :email
+                            requires :password
+                            requires :password_confirmation
+                            optional :username
+                        end
+                </section>
+                <section data-markdown>
+                    ## Representasi Data
+                </section>
+                <section data-markdown>
+                    ## Rails API
+                        - Active Model Serializer
+                        - RABL
+                </section>
+                <section data-markdown>
+                    ## Grape API
+                        - Grape Entities
+                        - Active Model Serializer
+                </section>
+                <section data-markdown>
+                    ## Routing
+                </section>
+                <section data-markdown>
+                    ## Rails API
+                        config/routes.rb
+
+                        namespace :api do
+                            namespace :v1 do
+                                resources :users, only: [:create, :update, :delete, :get, :index]
+                            end
+                        end
+
+                        app/controllers/api/v1/users_controler.rb
+
+                        class Api::V1::UserControler < ActionController::API
+                            def create
+                                # Logika Create
+                            end
+                            ...
+                            def delete
+                                # Logika Delete
+                            end
+                        end
+                </section>
+                <section data-markdown>
+                    ## Dokumentasi
+                </section>
+                <section data-markdown>
+                    ## Rails Api
+                      - Via Comments (Yardoc)
+                    
+                    //# @params format [Symbol]
+                      - Via routes (rails routes)
+                    
+                    ![](routes.png)
+                </section>
+                <section data-markdown>
+                    ## Grape API
+                        - Via routes & Parameters (Custom Script)
+                </section>
+                <section data-markdown>
+                    ## Versioning
+                </section>
+                <section data-markdown>
+                    ## Rails API
+                        - Via Url namespace
+                </section>
+                <section data-markdown>
+                    ## Grape API
+                        - Via Url namespace
+                        - Via Request Headers
+                </section>
+                <section>
+                    Terima Kasih
+                </section>
+                <aside class="notes">
+                    Rails Api Tidak Membuat:
+                    Assets
+                    Helpers
+                    CSRF Protection
+                    Cookies/Session Feature
+                    Tidak Menggenerate Assets, Views, Dan Helpers
+                    Rails Api Menambahkan RackCors
+                </aside>
             </div>
         </div>
         <script>
